@@ -8,7 +8,7 @@ import { initShipAuto } from './shipIntel.js';
 import { reportError } from './debugging.js';
 import { initI18n } from './i18n.js';
 import initChatUnicode from './chatUnicode.js';
-import initVaultSync from './vaultSync.js';
+import initStoreSync from './syncCore.js';
 
 window.__fx = window.__fx || {};
 window.__fx.reportError = reportError;
@@ -84,7 +84,7 @@ __fx.shipPanel = initShipPanel();
 __fx.shipAuto = initShipAuto();
 __fx.toolbox = initToolbox();
 __fx.chatUnicode = initChatUnicode();
-__fx.vaultSync = initVaultSync();
+__fx.storeSync = initStoreSync();
 __fx.getTeamTag = getTeamTag;
 __fx.selectedSpawnPlayer = -1;
 __fx.onLeaderboardPlayerClick = (player) => {

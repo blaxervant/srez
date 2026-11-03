@@ -12,7 +12,6 @@ Live site: <https://blaxervant.github.io/srez/>
 - Spawn labels, team tags, clan spawning and display options
 - Lobby chat Unicode conversion
 - Replay tools, lobby filters and reminders
-- Account Vault (included as-is)
 
 This build intentionally leaves out the Tab Mode bot iframe, the music player
 and the anime theme.
