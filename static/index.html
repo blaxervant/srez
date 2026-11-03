@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-WYYDMY13BG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WYYDMY13BG');
+</script>-->
+  <meta charset="utf-8" />
+  <title>srez</title>
+  <meta name="description" content="srez - a lightweight Territorial.io client">
+  <meta name="keywords"
+    content="territorial.io,territory games,territorial io,map games,conquest games,conquest game,david tschacher,territorial,territory game,io game,io games,territory.io,territory io,territory games io">
+  <meta name="author" content="MohsenEMX, peshomir,orlemley1, David Tschacher">
+  <meta name="viewport" content="width=device-width, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json" />
+
+  <meta name="og:image" content="https://blaxervant.github.io/srez/assets/logo.png" />
+  <meta property="og:url" content="https://blaxervant.github.io/srez/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="srez">
+  <meta property="og:description" content="srez - a lightweight Territorial.io client">
+  <meta property="og:image" content="https://blaxervant.github.io/srez/assets/logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="srez">
+  <meta name="twitter:description" content="srez - a lightweight Territorial.io client">
+  <meta name="twitter:image" content="https://blaxervant.github.io/srez/assets/logo.png">
+  <meta itemprop="name" content="srez">
+  <meta itemprop="description" content="srez - a lightweight Territorial.io client">
+  <meta itemprop="image" content="https://blaxervant.github.io/srez/assets/logo.png">
+
+  <!-- srez CSS -->
+  <link rel="stylesheet" href="main.css?buildTimestamp">
+  <!-- Game CSS -->
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      background: rgb(0, 0, 0);
+      color: rgb(255, 255, 255);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    a {
+      color: rgb(225, 225, 255);
+    }
+  </style>
+  <script>
+    // adapted from https://stackoverflow.com/a/44593894 and https://stackoverflow.com/a/40446448
+
+    function showUpdatePrompt(/** @type {ServiceWorker} */ sw) {
+      console.log("showing update prompt")
+      document.getElementById("updateNotification").style.display = "block";
+      document.getElementById("swUpdateButton").addEventListener("click", () => {
+        sw.postMessage({ update: true });
+      })
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!("serviceWorker" in navigator)) return;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        console.log("Controlling service worker changed, refreshing page");
+        window.location.reload();
+      });
+
+      navigator.serviceWorker.register("./sw2.js").then(function (registration) {
+        if (!navigator.serviceWorker.controller) return;
+        // if there's an updated worker already waiting, update
+        if (registration.waiting) return showUpdatePrompt(registration.waiting);
+
+        // if a worker in the "installing" state becomes "installed", update
+        function handleInstalling() {
+          var sw = registration.installing;
+          sw.addEventListener("statechange", function () {
+            if (sw.state === "installed") showUpdatePrompt(sw);
+          })
+        }
+        // if there's an updated worker installing, track its progress
+        if (registration.installing) handleInstalling();
+        // otherwise, listen for new workers arriving
+        registration.addEventListener('updatefound', handleInstalling);
+      });
+    });
+  </script>
+</head>
+
+<body class="fx-host">
+  <div class="window" style="display: none" id="updateNotification">
+    <h3>A new version of srez is available! Click the "Update" button below to update</h3>
+    <button id="swUpdateButton">Update</button>
+    <button onclick="document.getElementById('updateNotification').style.display = 'none'">Dismiss</button>
+  </div>
+  <script src="host.bundle.js?buildTimestamp"></script>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+.vscode
+node_modules
+game/*
+!game/latest.js
+!game/build_artefacts.js
+build
+SREZ_HANDOFF.md
