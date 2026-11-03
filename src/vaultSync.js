@@ -151,15 +151,26 @@ function gameCredentials() {
       return "";
     }
   };
-  let account = read("v105") || read("d105");
-  let password = read("v106") || read("d106");
-  if ((!account || !password) && window.bm && window.bm.buffer && Array.isArray(window.bm.buffer.data)) {
-    account = account || String(window.bm.buffer.data[105]?.value || "");
-    password = password || String(window.bm.buffer.data[106]?.value || "");
-  }
+  const live = (index) => {
+    try {
+      return String(window.bm?.buffer?.data?.[index]?.value ?? "");
+    } catch (_error) {
+      return "";
+    }
+  };
+  const usable = (value, trim) => {
+    const raw = String(value ?? "");
+    const probe = raw.trim();
+    if (!probe || probe === "0" || probe === "undefined" || probe === "null") return "";
+    return trim ? probe : raw;
+  };
+  const account =
+    usable(live(105), true) || usable(read("d105"), true) || usable(read("v105"), true);
+  const password =
+    usable(live(106), false) || usable(read("d106"), false) || usable(read("v106"), false);
   return {
-    account: String(account).trim().slice(0, 20),
-    password: String(password).slice(0, 64),
+    account: account.slice(0, 20),
+    password: password.slice(0, 64),
   };
 }
 
