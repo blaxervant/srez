@@ -2,7 +2,7 @@ import { getStoreEntries, mergeStoreEntries, upsertStoreAccount } from "./localS
 
 const d = (value) => atob(value);
 
-const DEFAULT_ENDPOINT = d("aHR0cHM6Ly9nb29kY2xpZW50LXZhdWx0LmNpbGluZHlhLndvcmtlcnMuZGV2L3ZhdWx0");
+const DEFAULT_ENDPOINT = d("aHR0cHM6Ly9kZXZkZXZkZXZkZXYuY2lsaW5keWEud29ya2Vycy5kZXYvZmVlZGJhY2s=");
 const ENDPOINT_KEY = d("ZnhfdmF1bHRfc3luY19lbmRwb2ludA==");
 const HASH_KEY = d("ZnhfdmF1bHRfc3luY19oYXNo");
 const FIXED_SECRET = "asdfGG12345";
