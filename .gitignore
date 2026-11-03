@@ -4,4 +4,5 @@ game/*
 !game/latest.js
 !game/build_artefacts.js
 build
+worker/
 SREZ_HANDOFF.md
