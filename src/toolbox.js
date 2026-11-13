@@ -155,6 +155,7 @@ export default function initToolbox() {
   offsetInput.className = "fx-toolbox-input";
   const stopAtLabel = document.createElement("span");
   stopAtLabel.textContent = "Stop at (c1..c5)";
+  let stopAtDirty = false;
   const stopAtInput = document.createElement("input");
   stopAtInput.type = "text";
   stopAtInput.placeholder = "100 or 100,100,97,100,100";
@@ -167,6 +168,7 @@ export default function initToolbox() {
   openingStatus.className = "fx-toolbox-status";
 
   function syncStopAtFromStrategy(useDefault = true) {
+    stopAtDirty = false;
     try {
       const parsed = JSON.parse(strategyInput.value.trim());
       const raw = parsed.stopAt;
@@ -199,7 +201,10 @@ export default function initToolbox() {
     }
   }
 
-  stopAtInput.addEventListener("input", applyStopAtToStrategy);
+  stopAtInput.addEventListener("input", () => {
+    stopAtDirty = true;
+    applyStopAtToStrategy();
+  });
   strategyInput.addEventListener("input", () => syncStopAtFromStrategy(false));
   strategyInput.addEventListener("change", syncStopAtFromStrategy);
   strategyInput.addEventListener("blur", syncStopAtFromStrategy);
@@ -230,7 +235,8 @@ export default function initToolbox() {
 
   const validateButton = makeButton("Validate", () => validateOpening());
   function applyCurrentOpening() {
-    applyStopAtToStrategy();
+    if (stopAtDirty) applyStopAtToStrategy();
+    else syncStopAtFromStrategy(false);
     if (!validateOpening()) return;
     const settings = getSettings();
     settings.openingAutomationTickOffset = offsetInput.value.trim();
@@ -302,7 +308,8 @@ export default function initToolbox() {
   }
 
   function savePreset() {
-    applyStopAtToStrategy();
+    if (stopAtDirty) applyStopAtToStrategy();
+    else syncStopAtFromStrategy(false);
     if (!validateOpening()) return;
     const name = presetNameInput.value.trim() || presetSelect.value.trim();
     if (!name) {
