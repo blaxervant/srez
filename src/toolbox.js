@@ -5,7 +5,6 @@ import { openingTickOffsetToInternalTicks } from "./openingTickOffset.js";
 import { attacksPerCycleToIntervalMs, intervalMsToAttacksPerCycle } from "./botAttackRate.js";
 import DEFAULT_OPENING_STRATEGY from "./defaultOpeningStrategy.js";
 import { t } from "./i18n.js";
-import { openAccountStore } from "./localStore.js";
 import { openHelpPanel } from "./helpPanels.js";
 
 const POSITION_STORAGE_KEY = "fx_toolbox_position";
@@ -534,9 +533,6 @@ export default function initToolbox() {
     makeMenuCard("Display", "Spawn labels, map display and status", "display"),
     makeMenuCard("Help", "Changelog and usage guide", "help")
   ];
-  const accountsCard = makeMenuCard("Accounts", "Saved accounts, cloud sync and gold", "menu");
-  accountsCard.addEventListener("click", () => { openAccountStore(); });
-  menuCards.push(accountsCard);
   menuGrid.append(...menuCards);
   menuPage.append(menuGrid);
 
